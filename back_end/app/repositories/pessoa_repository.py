@@ -24,5 +24,12 @@ class PessoaRepository:
         )
         db_pessoa.append(pessoa)
         return pessoa
+    
+    def find_person_id(self, id_pessoa: int) -> Optional[pessoa_schema.Pessoa]:
+        for pessoa in db_pessoa:
+            if pessoa.pessoa_id == id_pessoa:
+                return pessoa
+        return None
+
 # Exportamos uma instância única do repositório para ser usada em toda a aplicação (Singleton Pattern)
 pessoa_repository = PessoaRepository()

@@ -6,4 +6,10 @@ class PessoaService():
     def cadastrar(self, pessoa_data: pessoa_schema.PessoaCreate) -> Optional[pessoa_schema.Pessoa]:
         """ Regra de negócio para registrar pessoas no sistema """
         return pessoa_repository.create(pessoa_data)
+    
+    def buscar_pessoa(self, id_pessoa: int) -> Optional[pessoa_schema.Pessoa]:
+        pessoa = pessoa_repository.find_person_id(id_pessoa)
+        if not pessoa:
+            return ValueError('Pessoa não encontrada.')
+        return pessoa
 pessoa_service = PessoaService()
