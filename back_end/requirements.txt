@@ -1,0 +1,6 @@
+﻿fastapi # framework FastAPI
+uvicorn[standard] # ambiente servidor python 
+pydantic # validador de dados
+SQLAlchemy # ORM abstração de query sql
+mysql-connector-python # conector do mysql para aplicativo 
+python-dotenv # pacote para leitura de chaves secretas
