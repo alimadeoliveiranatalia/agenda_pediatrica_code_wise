@@ -1,4 +1,5 @@
-﻿from sqlalchemy import Column, Integer, String # type: ignore
+﻿# Classes de representação das tabelas do banco de dados
+from sqlalchemy import Column, Integer, String
 from ..database import Base
 
 class Consultorio(Base):
