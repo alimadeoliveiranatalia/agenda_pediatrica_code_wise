@@ -10,7 +10,6 @@ class ConsultorioRepository():
         novo_consultorio = consultorio.Consultorio(
             **consultorio_data.dict()
         )
-        print(f'novo consultorio: {novo_consultorio}')
         db.add(novo_consultorio)
         db.commit()
         db.refresh(novo_consultorio)
