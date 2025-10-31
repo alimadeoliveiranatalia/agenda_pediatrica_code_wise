@@ -26,10 +26,8 @@ def registrar_consultorio(consultorio_data: consultorio_schema.ConsultorioCreate
     response_model=consultorio_schema.Consultorio
 )
 def encontrar_consultorio(consultorio_id: int, db:Session = Depends(get_db)):
-    consultorio = consultorio_service.buscarConsultorio(consultorio_id, db)
-    if not consultorio:
-        raise HTTPException(
-            status_code=status.HTTP_404_NOT_FOUND,
-            detail="Este Consultório não Existe"
-        )
-    return consultorio
+    try:
+        consultorio = consultorio_service.buscarConsultorio(consultorio_id, db)
+        return consultorio
+    except ValueError as e:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=str(e))
