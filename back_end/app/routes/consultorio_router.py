@@ -32,3 +32,4 @@ def encontrar_consultorio(consultorio_id: int, db:Session = Depends(get_db)):
             status_code=status.HTTP_404_NOT_FOUND,
             detail="Este Consultório não Existe"
         )
+    return consultorio

@@ -16,11 +16,11 @@ class ConsultorioRepository():
         db.refresh(novo_consultorio)
         return novo_consultorio
     
-    def get_consultorio_by_id(id_consultorio: int, db: Session) -> Optional[consultorio.Consultorio]:
+    def get_consultorio_by_id(self, id_consultorio: int, db: Session) -> Optional[consultorio.Consultorio]:
         """ Efetua a busca de um consultorio no banco de dados pelo ID"""
         #for consultorio in db_consultorio:
         #    if(consultorio.consultorio_id == id_consultorio ):
         #        return consultorio
         #return None
-        return db.query(consultorio.Consultorio).filter(consultorio.Consultorio.consultorio_id == id_consultorio)
+        return db.query(consultorio.Consultorio).filter(consultorio.Consultorio.consultorio_id == id_consultorio).first()
 consultorio_repository = ConsultorioRepository()

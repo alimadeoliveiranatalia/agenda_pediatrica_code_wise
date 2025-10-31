@@ -9,7 +9,7 @@ class ConsultorioService():
         """Regras de negócios para registro de consultorios"""
         return consultorio_repository.create(consultorio_data, db)
     
-    def buscarConsultorio(id_consultorio: int, db: Session) -> Optional[consultorio_schema.Consultorio]:
+    def buscarConsultorio(self, id_consultorio: int, db: Session) -> Optional[consultorio_schema.Consultorio]:
         """ Encontrar se o Conultório existe """
         consultorio = consultorio_repository.get_consultorio_by_id(id_consultorio, db)
 
