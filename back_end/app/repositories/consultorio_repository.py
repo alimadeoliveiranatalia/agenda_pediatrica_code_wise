@@ -8,7 +8,7 @@ class ConsultorioRepository():
     def create(self, db: Session , consultorio_data: consultorio_schema.ConsultorioCreate ) -> Optional[consultorio.Consultorio]:  
         """ Registra um novo consultorio no banco de Dados. """
         novo_consultorio = consultorio.Consultorio(
-            consultorio_id = random.randint(1,250),
+            #consultorio_id = random.randint(1,250),
             **consultorio_data.dict()
         )
         db.add(novo_consultorio)
