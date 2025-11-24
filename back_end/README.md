@@ -36,5 +36,5 @@ Insira um gif ou um link de alguma demonstração
 #### 6. Acesse o endereço em http://127.0.0.1:8000/docs no navegador
 
 ## 🛠 Habilidades
-Javascript, HTML, CSS...
+Python, Rest-API, FastAPI...
 

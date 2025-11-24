@@ -1,0 +1,217 @@
+﻿<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Agenda Pediátrica</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <script src="script.js" defer></script>
+</head>
+
+<body class="min-h-screen flex">
+
+  <!-- Botão de Menu (Visível apenas em Mobile) -->
+  <button id="menu-button">
+    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"
+      width="24" height="24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+    </svg>
+  </button>
+
+  <!-- 1. SIDEBAR DE NAVEGAÇÃO -->
+  <aside id="sidebar">
+
+    <!-- Logo/Título da Aplicação -->
+    <div class="logo">
+      Agenda Pediátrica
+    </div>
+
+    <!-- Menu de Navegação -->
+    <nav>
+      <!-- Item Ativo: Dashboard -->
+      <a href="#" id="nav-dashboard" data-page="dashboard" class="nav-item active">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+          <path
+            d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z" />
+        </svg>
+        Dashboard
+      </a>
+
+      <!-- Item Inativo: Cadastro -->
+      <a href="#" id="nav-cadastro" data-page="cadastro" class="nav-item">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+          <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd" />
+        </svg>
+        Cadastro de Pacientes
+      </a>
+
+      <!-- Item Inativo: Relatórios -->
+      <a href="#" id="nav-relatorios" data-page="relatorios" class="nav-item">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+          <path fill-rule="evenodd"
+            d="M4 4a2 2 0 012-2h8a2 2 0 012 2v12a1 1 0 01-1 1H5a1 1 0 01-1-1V4zm5 2a1 1 0 00-1 1v5a1 1 0 001 1h1a1 1 0 001-1V7a1 1 0 00-1-1H9z"
+            clip-rule="evenodd" />
+        </svg>
+        Relatórios
+      </a>
+
+    </nav>
+
+    <!-- Rodapé da Sidebar (Informações do Usuário) -->
+    <div class="user-info">
+      <div class="details">
+        <div class="avatar">MC</div>
+        <div>
+          <p class="name">Maria Costa</p>
+          <p class="role">Administradora</p>
+        </div>
+      </div>
+    </div>
+
+  </aside>
+
+  <!-- 2. CONTEÚDO PRINCIPAL -->
+  <main>
+
+    <!-- Header da Página Principal (Título) -->
+    <header>
+      <h1 id="page-title">Dashboard</h1>
+      <p id="page-subtitle" class="page-subtitle">Visão geral e indicadores chave da clínica.</p>
+    </header>
+
+    <!-- Seções de Conteúdo Dinâmico -->
+    <div id="content-container">
+
+      <div id="dashboard-content" class="page-content">
+        <div class="card-grid">
+          <!-- Cartão 1 -->
+          <div class="info-card blue">
+            <p class="label">Pacientes Ativos</p>
+            <p class="value" id="total_pacientes">1.250</p>
+          </div>
+          <!-- Cartão 2 -->
+          <div class="info-card green">
+            <p class="label">Agendamentos Hoje</p>
+            <p class="value">42</p>
+          </div>
+        </div>
+        <!-- Calendário de Consultas -->
+        <div class="calendar-container">
+          <!-- Coluna da Esquerda: O Calendário Visual -->
+          <div>
+            <div class="calendar-header">
+              <button id="prev-month-button">
+                <!-- Ícone Seta Esquerda -->
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                  stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M15 18l-6-6 6-6" />
+                </svg>
+              </button>
+              <span id="current-month-year">Novembro 2025</span>
+              <button id="next-month-button">
+                <!-- Ícone Seta Direita -->
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                  stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M9 18l6-6-6-6" />
+                </svg>
+              </button>
+            </div>
+            <div class="calendar-grid" id="calendar-days-container">
+              <!-- Os dias da semana e os números serão gerados por JS -->
+              <div class="calendar-weekday">Dom</div>
+              <div class="calendar-weekday">Seg</div>
+              <div class="calendar-weekday">Ter</div>
+              <div class="calendar-weekday">Qua</div>
+              <div class="calendar-weekday">Qui</div>
+              <div class="calendar-weekday">Sex</div>
+              <div class="calendar-weekday">Sáb</div>
+              <!-- Dias do mês serão inseridos aqui pelo JS -->
+            </div>
+          </div>
+
+          <!-- Coluna da Direita: Detalhes da Consulta -->
+          <div class="appointments-list">
+            <h3 id="appointments-title">Consultas para 24/11/2025</h3>
+            <div id="appointments-detail">
+              <p class="text-secondary">Selecione um dia com agendamentos para ver os detalhes.</p>
+              <!-- Detalhes das consultas serão inseridos aqui pelo JS -->
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="cadastro-content" class="page-content hidden">
+        <form id="cadastro-form">
+          <!-- DADOS PESSOAIS -->
+          <fieldset>
+            <legend>Dados Pessoais</legend>
+            <div class="form-section">
+              <div class="input-field">
+                <label for="nome">Nome Completo</label>
+                <input type="text" id="nome" name="nome" required>
+              </div>
+
+              <div class="input-field">
+                <label for="dataNascimento">Data de Nascimento</label>
+                <input type="date" id="dataNascimento" name="dataNascimento" required>
+              </div>
+
+              <div class="input-field">
+                <label for="sexo">Convênio</label>
+                <select id="convenio" name="id_plano_saude" required>
+                  <option value="">Selecione</option>
+                  <option value="1">Unimed</option>
+                  <option value="2">Bradesco Seguros</option>
+                </select>
+              </div>
+
+              <div class="input-field">
+                <label for="dataPrimeiraConsulta">Data da primeira consulta</label>
+                <input type="datetime-local" id="dataPrimeiraConsulta" name="dataPrimeiraConsulta">
+              </div>
+            </div>
+          </fieldset>
+
+          <!-- CONTATO E ENDEREÇO -->
+          <fieldset>
+            <legend>Contato e Endereço</legend>
+            <div class="form-section">
+              <div class="input-field">
+                <label for="email">E-mail</label>
+                <input type="email" id="email" name="email" placeholder="exemplo@dominio.com">
+              </div>
+              <div class="input-field">
+                <label for="celular">Celular</label>
+                <input type="tel" id="celular" name="telefone" placeholder="(00) 90000-0000" required>
+              </div>
+              <div class="input-field" style="grid-column: 1 / -1;">
+                <label for="logradouro">Logradouro</label>
+                <input type="text" id="logradouro" name="endereco" required>
+              </div>
+            </div>
+          </fieldset>
+
+          <button type="submit">
+            Salvar Cadastro
+          </button>
+
+          <!-- Mensagem de feedback (invisível por padrão) -->
+          <div id="feedback-message" class="hidden" role="alert"></div>
+        </form>
+      </div>
+
+      <div id="relatorios-content" class="page-content hidden">
+        <!-- Conteúdo para Relatórios -->
+        <div class="chart-placeholder">
+          <p class="text-gray-700">Tela de Geração de Relatórios.</p>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+</body>
+
+</html>

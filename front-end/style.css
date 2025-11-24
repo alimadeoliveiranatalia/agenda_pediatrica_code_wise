@@ -1,0 +1,617 @@
+﻿/* Variáveis e Configurações Globais */
+:root {
+  --sidebar-width: 280px;
+  --primary-color: #2563eb;
+  /* Blue 600 */
+  --primary-dark: #1d4ed8;
+  /* Blue 700 */
+  --bg-page: #f3f4f6;
+  /* Gray 100 */
+  --bg-card: #ffffff;
+  --text-default: #1f2937;
+  /* Gray 800 */
+  --text-secondary: #6b7280;
+  /* Gray 500 */
+  --border-color: #e5e7eb;
+  /* Gray 200 */
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  margin: 0;
+  background-color: var(--bg-page);
+  min-height: 100vh;
+  display: flex;
+  /* min-h-screen flex */
+}
+
+/* Oculta o scrollbar (hide-scrollbar) */
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+.hide-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* Estilo para simular o ícone de menu em telas pequenas */
+#menu-button {
+  position: fixed;
+  top: 1rem;
+  left: 1rem;
+  padding: 0.5rem;
+  background-color: var(--primary-color);
+  color: white;
+  border-radius: 0.5rem;
+  box-shadow: var(--shadow-lg);
+  z-index: 50;
+  transition: transform 0.3s;
+  border: none;
+  cursor: pointer;
+}
+
+/* 1. SIDEBAR DE NAVEGAÇÃO */
+#sidebar {
+  position: fixed;
+  top: 0;
+  height: 100vh;
+  width: var(--sidebar-width);
+  background-color: var(--bg-card);
+  border-right: 1px solid var(--border-color);
+  box-shadow: var(--shadow-lg);
+  transform: translateX(-100%);
+  /* -translate-x-full */
+  transition: transform 0.3s ease-in-out;
+  z-index: 40;
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Sidebar: Estado Aberto (por JS em mobile) */
+.sidebar-open {
+  transform: translateX(0);
+}
+
+/* Sidebar: Responsividade para Desktop */
+@media (min-width: 1024px) {
+
+  /* lg: */
+  #sidebar {
+    position: sticky;
+    /* lg:sticky */
+    transform: translateX(0);
+    /* lg:translate-x-0 */
+    flex-shrink: 0;
+    /* Evita que encolha em tela grande */
+  }
+
+  #menu-button {
+    display: none;
+    /* lg:hidden */
+  }
+}
+
+/* Logo/Título */
+#sidebar .logo {
+  font-size: 1.25rem;
+  /* text-xl */
+  font-weight: 700;
+  /* font-bold */
+  color: var(--primary-color);
+  margin-bottom: 2rem;
+  /* mb-8 */
+  border-bottom: 1px solid var(--border-color);
+  /* border-b pb-4 */
+  padding-bottom: 1rem;
+}
+
+/* Menu Container */
+#sidebar nav {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  /* space-y-2 */
+}
+
+/* Item de Navegação Padrão */
+.nav-item {
+  display: flex;
+  align-items: center;
+  padding: 0.75rem;
+  /* p-3 */
+  font-size: 0.875rem;
+  /* text-sm */
+  font-weight: 500;
+  /* font-medium */
+  color: var(--text-default);
+  /* text-gray-700 */
+  border-radius: 0.5rem;
+  /* rounded-lg */
+  transition: background-color 0.15s ease-in-out;
+  text-decoration: none;
+}
+
+.nav-item:hover {
+  background-color: var(--border-color);
+  /* hover:bg-gray-100 */
+}
+
+/* Item de Navegação Ativo */
+.nav-item.active {
+  font-weight: 600;
+  /* font-semibold */
+  color: white;
+  background-color: var(--primary-color);
+  box-shadow: var(--shadow-sm);
+}
+
+/* Ícones na Navegação */
+.nav-item svg {
+  height: 1.25rem;
+  /* h-5 */
+  width: 1.25rem;
+  /* w-5 */
+  margin-right: 0.75rem;
+  /* mr-3 */
+}
+
+/* Rodapé da Sidebar (Usuário) */
+#sidebar .user-info {
+  margin-top: auto;
+  padding-top: 1rem;
+  border-top: 1px solid var(--border-color);
+}
+
+.user-info .details {
+  display: flex;
+  align-items: center;
+  padding: 0.75rem;
+  border-radius: 0.5rem;
+  transition: background-color 0.15s;
+}
+
+.user-info .details:hover {
+  background-color: var(--border-color);
+}
+
+.user-info .avatar {
+  background-color: #d1d5db;
+  /* bg-gray-300 */
+  height: 2.5rem;
+  /* h-10 */
+  width: 2.5rem;
+  /* w-10 */
+  border-radius: 9999px;
+  /* rounded-full */
+  margin-right: 0.75rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.875rem;
+  font-weight: 700;
+  color: var(--text-default);
+}
+
+.user-info p {
+  margin: 0;
+  line-height: 1.2;
+}
+
+.user-info .name {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--text-default);
+}
+
+.user-info .role {
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+}
+
+
+/* 2. CONTEÚDO PRINCIPAL (MAIN) */
+main {
+  flex-grow: 1;
+  /* flex-grow */
+  padding: 1rem;
+  /* p-4 */
+  overflow-y: auto;
+  width: 100%;
+  /* w-full */
+}
+
+@media (min-width: 640px) {
+
+  /* sm: */
+  main {
+    padding: 2rem;
+    /* sm:p-8 */
+  }
+}
+
+/* Header da Página */
+main header {
+  background-color: var(--bg-card);
+  padding: 1.5rem;
+  /* p-6 */
+  border-radius: 0.75rem;
+  /* rounded-xl */
+  box-shadow: var(--shadow-lg);
+  margin-bottom: 2rem;
+  /* mb-8 */
+}
+
+main h1 {
+  font-size: 1.5rem;
+  /* text-2xl */
+  font-weight: 700;
+  color: var(--text-default);
+  margin: 0;
+}
+
+main .page-subtitle {
+  color: var(--text-secondary);
+  margin-top: 0.25rem;
+  /* mt-1 */
+  font-size: 1rem;
+}
+
+/* DASHBOARD - Cartões */
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+  /* grid-cols-1 */
+  gap: 1.5rem;
+  /* gap-6 */
+}
+
+@media (min-width: 768px) {
+
+  /* md: */
+  .card-grid {
+    grid-template-columns: repeat(2, 1fr);
+    /* md:grid-cols-2 */
+  }
+}
+
+@media (min-width: 1024px) {
+
+  /* lg: */
+  .card-grid {
+    grid-template-columns: repeat(4, 1fr);
+    /* lg:grid-cols-4 */
+  }
+}
+
+.info-card {
+  background-color: var(--bg-card);
+  padding: 1.25rem;
+  /* p-5 */
+  border-radius: 0.75rem;
+  /* rounded-xl */
+  box-shadow: var(--shadow-sm);
+  /* shadow-md */
+  border-top: 4px solid;
+  /* border-t-4 */
+}
+
+.info-card.blue {
+  border-top-color: var(--primary-color);
+}
+
+.info-card.green {
+  border-top-color: #10b981;
+}
+
+/* Green 500 */
+.info-card.yellow {
+  border-top-color: #f59e0b;
+}
+
+/* Yellow 500 */
+.info-card.red {
+  border-top-color: #ef4444;
+}
+
+/* Red 500 */
+
+.info-card p {
+  margin: 0;
+}
+
+.info-card .label {
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+}
+
+.info-card .value {
+  font-size: 1.875rem;
+  font-weight: 700;
+  color: var(--text-default);
+  margin-top: 0.25rem;
+}
+
+/* Gráfico Placeholder */
+.chart-placeholder {
+  margin-top: 2rem;
+  /* mt-8 */
+  background-color: var(--bg-card);
+  padding: 1.5rem;
+  /* p-6 */
+  border-radius: 0.75rem;
+  box-shadow: var(--shadow-lg);
+}
+
+.chart-placeholder h3 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+}
+
+.chart-area {
+  height: 16rem;
+  /* h-64 */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #9ca3af;
+  /* gray-400 */
+}
+
+/* CADASTRO - Formulário */
+#cadastro-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  /* space-y-6 */
+  background-color: var(--bg-card);
+  padding: 2rem;
+  /* p-8 */
+  border-radius: 0.75rem;
+  box-shadow: var(--shadow-lg);
+}
+
+fieldset {
+  border: 1px solid var(--border-color);
+  padding: 1.5rem;
+  /* p-6 */
+  border-radius: 0.5rem;
+  margin: 0;
+  min-width: 0;
+}
+
+legend {
+  color: var(--primary-color);
+  font-weight: 700;
+  padding: 0 0.5rem;
+  /* px-2 */
+}
+
+.form-section {
+  padding-top: 1rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1rem;
+  /* gap-4 */
+}
+
+.input-field {
+  display: flex;
+  flex-direction: column;
+}
+
+.input-field label {
+  display: block;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--text-default);
+  margin-bottom: 0.25rem;
+  /* mb-1 */
+}
+
+.input-field input,
+.input-field select {
+  width: 100%;
+  padding: 0.5rem;
+  border: 1px solid #d1d5db;
+  /* border-gray-300 */
+  border-radius: 0.5rem;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.input-field input:focus,
+.input-field select:focus {
+  outline: none;
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 1px var(--primary-color);
+}
+
+/* Botão de Submissão */
+#cadastro-form button[type="submit"] {
+  width: 100%;
+  background-color: var(--primary-color);
+  color: white;
+  font-weight: 600;
+  padding: 0.75rem 1rem;
+  /* py-3 px-4 */
+  border-radius: 0.5rem;
+  transition: background-color 0.2s;
+  box-shadow: var(--shadow-sm);
+  border: none;
+  cursor: pointer;
+}
+
+/* NOVO: Calendário de Consultas */
+.calendar-container {
+  margin-top: 2rem;
+  /* mt-8 */
+  background-color: var(--bg-card);
+  padding: 1.5rem;
+  /* p-6 */
+  border-radius: 0.75rem;
+  box-shadow: var(--shadow-lg);
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+}
+
+@media (min-width: 1024px) {
+  .calendar-container {
+    grid-template-columns: 2fr 1fr;
+    /* Calendário + Lista de eventos */
+  }
+}
+
+.calendar-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+  font-size: 1.25rem;
+  font-weight: 600;
+}
+
+.calendar-header button {
+  background: none;
+  border: none;
+  color: var(--primary-color);
+  cursor: pointer;
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+  transition: background-color 0.2s;
+}
+
+.calendar-header button:hover {
+  background-color: var(--border-color);
+}
+
+.calendar-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 0.25rem;
+  text-align: center;
+  font-size: 0.875rem;
+}
+
+.calendar-weekday {
+  font-weight: 600;
+  color: var(--text-secondary);
+  padding: 0.5rem 0;
+}
+
+.calendar-day {
+  padding: 0.6rem;
+  cursor: pointer;
+  border-radius: 0.5rem;
+  transition: background-color 0.2s;
+  position: relative;
+  height: 2.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-default);
+  font-weight: 500;
+}
+
+.calendar-day:hover:not(.empty):not(.today):not(.has-appointment) {
+  background-color: var(--bg-page);
+}
+
+.calendar-day.empty {
+  visibility: hidden;
+  cursor: default;
+}
+
+.calendar-day.inactive-month {
+  color: #d1d5db;
+  /* gray-300 */
+}
+
+.calendar-day.today {
+  background-color: #fee2e2;
+  /* red-100 */
+  border: 1px solid #f87171;
+  /* red-400 */
+}
+
+.calendar-day.has-appointment {
+  background-color: #dbeafe;
+  /* blue-100 */
+  color: var(--primary-dark);
+  font-weight: 700;
+  position: relative;
+}
+
+.appointment-dot {
+  position: absolute;
+  bottom: 4px;
+  right: 4px;
+  width: 6px;
+  height: 6px;
+  background-color: var(--primary-color);
+  border-radius: 9999px;
+}
+
+.appointments-list h3 {
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: var(--text-default);
+  margin-bottom: 1rem;
+}
+
+.appointment-item {
+  padding: 0.75rem;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.appointment-item:last-child {
+  border-bottom: none;
+}
+
+.appointment-item .time {
+  font-weight: 700;
+  color: var(--primary-color);
+  font-size: 1rem;
+}
+
+.appointment-item .patient {
+  font-size: 0.875rem;
+  color: var(--text-default);
+}
+
+
+
+#cadastro-form button[type="submit"]:hover {
+  background-color: var(--primary-dark);
+}
+
+/* Mensagem de Feedback */
+#feedback-message {
+  padding: 1rem;
+  font-size: 0.875rem;
+  border-radius: 0.5rem;
+}
+
+.feedback-success {
+  background-color: #dcfce7;
+  /* green-100 */
+  color: #047857;
+  /* green-800 */
+}
+
+.feedback-error {
+  background-color: #dcfce7;
+  /* green-100 */
+  color: #ef4444;
+  /* green-800 */
+}
+
+/* Classe utilitária nativa */
+.hidden {
+  display: none !important;
+}
